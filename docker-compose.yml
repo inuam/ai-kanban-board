@@ -1,6 +1,6 @@
 services:
   backend:
     build:
-      context: ./backend
+      context: .
     ports:
       - "8080:8080"

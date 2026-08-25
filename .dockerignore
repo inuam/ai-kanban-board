@@ -1,0 +1,6 @@
+frontend
+docs
+.git
+.idea
+target
+.mvn/wrapper/maven-wrapper.jar
