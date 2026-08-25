@@ -1,5 +1,7 @@
 .env
 .idea/
+target/
+.mvn/wrapper/maven-wrapper.jar
 
 # Compiled class file
 

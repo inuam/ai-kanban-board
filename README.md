@@ -8,7 +8,7 @@ See [AGENTS.md](AGENTS.md) for the full business requirements and technical deci
 
 This is an MVP under active development. Currently implemented:
 
-- Backend scaffolding: a Spring Boot app in `backend/`, packaged in Docker, serving a placeholder page and a sample API endpoint.
+- Backend scaffolding: a Spring Boot app at the repo root (`pom.xml`, `src/`), packaged in Docker, serving a placeholder page and a sample API endpoint.
 - Frontend: a standalone Kanban board demo in `frontend/` (not yet wired into the backend - see [frontend/AGENTS.md](frontend/AGENTS.md)).
 
 Sign-in, persistence, and the AI chat sidebar are not built yet. See `docs/PLAN.md` for what's done and what's next.
@@ -34,5 +34,5 @@ scripts\stop.ps1
 
 ## Development
 
-- Backend (Java 21 / Spring Boot / Maven): see [backend/AGENTS.md](backend/AGENTS.md). Run tests with `cd backend; mvn test`.
+- Backend (Java 21 / Spring Boot / Maven, project root): see [AGENTS.md](AGENTS.md). Run tests with `mvn test`.
 - Frontend (Next.js): see [frontend/AGENTS.md](frontend/AGENTS.md). Run it standalone with `cd frontend; npm install; npm run dev`.

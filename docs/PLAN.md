@@ -20,17 +20,19 @@ Enrich this document to plan out each part in detail, with substeps listed as a 
 
 ## Part 2: Scaffolding
 
-Set up Docker infrastructure, a Spring Boot backend skeleton in backend/, and start/stop scripts in scripts/ (Windows only for now). Serve example static HTML confirming a "hello world" example works locally, and confirm a simple API call works.
+Set up Docker infrastructure, a Spring Boot backend skeleton at the repo root, and start/stop scripts in scripts/ (Windows only for now). Serve example static HTML confirming a "hello world" example works locally, and confirm a simple API call works.
 
-- [x] Initialize Spring Boot project in backend/ (Java 21, Maven, per backend/AGENTS.md decisions)
+- [x] Initialize Spring Boot project at the repo root (Java 21, Maven, per AGENTS.md decisions) - a conventional Maven layout (pom.xml + src/) alongside frontend/, docs/, scripts/
 - [x] Add a minimal controller serving a static "hello world" HTML page at / (served via Spring Boot's default static resource handling, no controller needed)
 - [x] Add a minimal REST endpoint (GET /api/hello) returning a JSON payload
 - [x] Write a Dockerfile that builds the backend with mvn and runs it
 - [x] Write docker-compose to run the container locally, mapping port 8080
 - [x] Write scripts/start.ps1 and scripts/stop.ps1 (Windows) to build/run and stop the container
-- [x] Document how to run locally in backend/AGENTS.md and scripts/AGENTS.md
+- [x] Document how to run locally in AGENTS.md and scripts/AGENTS.md
 
 **Status: Done.** Verified end-to-end: `scripts/start.ps1` builds the Docker image and starts the container, `GET /` returns the static hello page, `GET /api/hello` returns `{"message":"Hello, World!"}`, and `scripts/stop.ps1` cleanly stops and removes the container. Backend unit test (`HelloControllerTest`) and integration tests (`HelloControllerIntegrationTest`, `BackendApplicationTests`) all pass via `mvn test`.
+
+The Maven project was moved from a `backend/` subfolder to the repo root (`pom.xml`, `src/` alongside `frontend/`, `docs/`, `scripts/`) for a conventional Maven layout; `docker-compose.yml`'s build context and a new `.dockerignore` were updated accordingly.
 
 **Tests / success criteria:**
 - Running the start script builds and starts the container without manual steps
