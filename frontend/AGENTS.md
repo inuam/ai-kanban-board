@@ -9,6 +9,7 @@ The frontend currently implements only the Kanban board demo (no auth, no backen
 ## Technical Decisions
 
 - Next.js (App Router), React 19, TypeScript
+- Static export (`output: "export"` in next.config.ts) - the backend serves the build output (`out/`) as plain static files at /, no Node server involved in production
 - Tailwind CSS v4, styled with CSS variables matching the top-level color scheme
 - @dnd-kit/core and @dnd-kit/sortable for drag and drop
 - Vitest + React Testing Library for unit tests
@@ -45,7 +46,7 @@ Built with `@dnd-kit/core` and `@dnd-kit/sortable`. Uses `PointerSensor` with a 
 
 - Unit tests (Vitest + Testing Library): `src/lib/kanban.test.ts` (covers `moveCard`), `src/components/KanbanBoard.test.tsx` (renders columns, renames a column, adds/removes a card through the UI)
 - Test setup: `src/test/setup.ts` (imports `jest-dom`), `src/test/vitest.d.ts`
-- End-to-end tests (Playwright): `tests/kanban.spec.ts` - board loads with 5 columns, add a card via UI, drag a card between columns; baseURL `http://127.0.0.1:3000`, auto-starts `npm run dev`
+- End-to-end tests (Playwright): `tests/kanban.spec.ts` - board loads with 5 columns, add a card via UI, drag a card between columns. By default baseURL is `http://127.0.0.1:3000` and Playwright auto-starts `npm run dev`. Set `PLAYWRIGHT_BASE_URL` (e.g. `http://127.0.0.1:8080` once the Docker container is running) to run the same suite against an already-running server instead - Playwright skips starting its own dev server whenever that variable is set.
 
 ### npm scripts
 
