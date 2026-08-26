@@ -8,10 +8,10 @@ See [AGENTS.md](AGENTS.md) for the full business requirements and technical deci
 
 This is an MVP under active development. Currently implemented:
 
-- Backend scaffolding: a Spring Boot app at the repo root (`pom.xml`, `src/`), packaged in Docker, serving a placeholder page and a sample API endpoint.
-- Frontend: a standalone Kanban board demo in `frontend/` (not yet wired into the backend - see [frontend/AGENTS.md](frontend/AGENTS.md)).
+- Backend scaffolding: a Spring Boot app at the repo root (`pom.xml`, `src/`), packaged in Docker.
+- Frontend: a Kanban board demo (drag-and-drop columns and cards) in `frontend/`, statically exported and served by the backend at `/` - see [frontend/AGENTS.md](frontend/AGENTS.md).
 
-Sign-in, persistence, and the AI chat sidebar are not built yet. See `docs/PLAN.md` for what's done and what's next.
+The Kanban board has no persistence yet - it resets on refresh. Sign-in, a real database, and the AI chat sidebar are not built yet. See `docs/PLAN.md` for what's done and what's next.
 
 ## Running the app
 
@@ -21,9 +21,9 @@ Requires Docker Desktop running locally.
 scripts\start.ps1
 ```
 
-This builds the backend image and starts it. Once it's up, visit:
+This builds the frontend and backend images and starts the container. Once it's up, visit:
 
-- http://localhost:8080 - the app (currently a placeholder page)
+- http://localhost:8080 - the Kanban board
 - http://localhost:8080/api/hello - a sample JSON API endpoint
 
 To stop it:

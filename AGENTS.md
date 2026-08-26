@@ -34,7 +34,7 @@ For the MVP, this will run locally (in a docker container)
 
 ## Starting Point
 
-A working MVP of the frontend has been built and is already in frontend. This is not yet designed for the Docker setup. It's a pure frontend-only demo.
+A working MVP of the frontend has been built and is already in frontend. As of Part 3 it's statically exported and served by the backend in Docker; it's still a pure frontend-only demo with no persistence or backend API wiring.
 
 ## Backend - Existing Code
 
@@ -43,10 +43,10 @@ Generated with Spring Boot 4.1.1 / Java 21 via start.spring.io (dependency: Spri
 - `pom.xml` - Maven project, `spring-boot-starter-webmvc` for the web app, `spring-boot-starter-webmvc-test` + `spring-boot-restclient` for tests (JUnit 5, AssertJ, MockMvc, TestRestTemplate)
 - `src/main/java/com/pm/backend/BackendApplication.java` - Spring Boot entry point
 - `src/main/java/com/pm/backend/hello/HelloController.java` - `GET /api/hello`, returns a `HelloResponse` JSON record
-- `src/main/resources/static/index.html` - placeholder "hello world" page, served automatically at `/` by Spring Boot's static resource handling (no controller needed); replaced by the built frontend in Part 3
+- `src/main/resources/static/` - empty in source control; the frontend's static export is copied in here at Docker build time (see Dockerfile below) and served automatically at `/` by Spring Boot's static resource handling - no controller needed. Without a Docker build (e.g. plain `mvn test`), `/` returns 404, which `HelloControllerIntegrationTest` asserts explicitly
 - `src/test/java/.../hello/HelloControllerTest.java` - unit test, calls the controller directly
-- `src/test/java/.../hello/HelloControllerIntegrationTest.java` - integration test, boots the full app on a random port and hits `/` and `/api/hello` over real HTTP via `TestRestTemplate`
-- `Dockerfile` - multi-stage build: `maven:3.9-eclipse-temurin-21` builds the jar, `eclipse-temurin:21-jre` runs it
+- `src/test/java/.../hello/HelloControllerIntegrationTest.java` - integration test, boots the full app on a random port and hits `/api/hello` over real HTTP via `TestRestTemplate`
+- `Dockerfile` - three-stage build: `node:22-alpine` builds the frontend's static export (`frontend/out`), `maven:3.9-eclipse-temurin-21` copies that into `src/main/resources/static` and builds the jar, `eclipse-temurin:21-jre` runs it
 
 ## Running locally
 

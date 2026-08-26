@@ -47,12 +47,14 @@ The Maven project was moved from a `backend/` subfolder to the repo root (`pom.x
 
 Statically build and serve the frontend so the app shows the demo Kanban board at /, replacing the temporary hello-world page.
 
-- [ ] Configure Next.js for static export (`output: "export"`) so the build produces plain static HTML/JS/CSS
-- [ ] Update backend to serve the built frontend static assets at /
-- [ ] Update Docker build to run `npm run build` for frontend and copy the exported output into the backend image
-- [ ] Remove/retire the Part 2 placeholder hello-world page
-- [ ] Update start/stop scripts if the build process changes
-- [ ] Keep and extend existing frontend unit tests (Vitest) and e2e tests (Playwright) to run against the served build
+- [x] Configure Next.js for static export (`output: "export"`) so the build produces plain static HTML/JS/CSS
+- [x] Update backend to serve the built frontend static assets at / (Spring Boot's default static resource handling - no controller needed)
+- [x] Update Docker build to run `npm run build` for frontend and copy the exported output into the backend image (new `frontend-build` stage in the Dockerfile, output copied into `src/main/resources/static` before `mvn package`)
+- [x] Remove/retire the Part 2 placeholder hello-world page (`src/main/resources/static/index.html` deleted; `/` now returns 404 outside of a Docker build, which `HelloControllerIntegrationTest` asserts)
+- [x] Update start/stop scripts if the build process changes (no changes needed - they only call `docker compose up --build` / `down`, which now runs the extra frontend-build stage automatically)
+- [x] Keep and extend existing frontend unit tests (Vitest) and e2e tests (Playwright) to run against the served build (`playwright.config.ts` now supports `PLAYWRIGHT_BASE_URL` to point the same suite at an already-running server instead of starting its own dev server)
+
+**Status: Done.** Verified end-to-end: `npm run test:all` passes in isolation (6 unit + 3 e2e tests against the dev server); `docker compose up --build -d` builds the frontend's static export and bakes it into the backend jar; `GET /` serves the real Kanban board ("Kanban Studio"); `GET /api/hello` still returns the sample JSON; running `PLAYWRIGHT_BASE_URL=http://127.0.0.1:8080 npx playwright test` against the Docker-served app passes all 3 e2e tests (load, add card, drag-and-drop move); `docker compose down` cleanly stops it. Backend tests (`mvn test`, 4/4) still pass.
 
 **Tests / success criteria:**
 - `npm run test:all` (unit + e2e) passes against the frontend in isolation
